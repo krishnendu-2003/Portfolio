@@ -89,13 +89,18 @@ export const windowMeta: Record<string, WindowMeta> = {
     defaultSize: { w: 320, h: 360 },
     resizable: true,
   },
+  match: {
+    title: "Match",
+    icon: "/icons/match.svg",
+    defaultSize: { w: 320, h: 340 },
+    resizable: true,
+  },
 };
 
-// Filled in as each game is registered below (Phase 2 3c) — the single
-// source of truth GamesFolder, the Start Menu's Games submenu, and
-// High Scores all read from, so nothing has to be updated in three
-// places per game.
-export const GAME_IDS: string[] = [];
+// Filled in as each game is registered (Phase 2 3c) — the single source
+// of truth GamesFolder, the Start Menu's Games submenu, and High Scores
+// all read from, so nothing has to be updated in three places per game.
+export const GAME_IDS: string[] = ["match"];
 
 // Case cards + full case windows, opened from inside the Selected Work
 // folder — not shown as top-level desktop icons.

@@ -8,4 +8,10 @@ export type GameCatalogEntry = {
   formatScore: (value: number) => string;
 };
 
-export const GAME_CATALOG: Record<string, GameCatalogEntry> = {};
+export const GAME_CATALOG: Record<string, GameCatalogEntry> = {
+  match: {
+    title: "Match",
+    higherIsBetter: false,
+    formatScore: (v) => `${v} moves`,
+  },
+};

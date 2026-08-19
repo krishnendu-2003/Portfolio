@@ -19,6 +19,7 @@ import { cases } from "@/content/cases";
 // Heavy, canvas-driven apps split into their own chunk, loaded only when
 // the window actually opens — must never land in the homepage bundle.
 const Sketchpad = dynamic(() => import("@/components/apps/Sketchpad"), { ssr: false });
+const Match = dynamic(() => import("@/components/apps/games/Match"), { ssr: false });
 import { windowMeta, type WindowMeta, DESKTOP_ICON_ORDER } from "./windowMeta";
 
 export type WindowRegistryEntry = WindowMeta & {
@@ -43,6 +44,7 @@ const componentsById: Record<string, ComponentType<{ windowId: string }>> = {
   sketchpad: wrap(Sketchpad),
   games: GamesFolder,
   "high-scores": wrap(HighScores),
+  match: Match,
 };
 
 for (const item of cases) {

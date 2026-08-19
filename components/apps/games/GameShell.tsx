@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { useWindowStore } from "@/lib/windowStore";
+import { useScoresStore } from "@/lib/scoresStore";
 
 // A game only runs while its own window is the focused, non-minimized,
 // visible one — pause on blur/minimize/back-stack/tab-hide, genuinely
@@ -43,10 +44,15 @@ export function GameShell({
   children: (opts: { running: boolean }) => ReactNode;
 }) {
   const windowActive = useWindowActive(windowId);
+  const hydrateScores = useScoresStore((s) => s.hydrate);
   const [started, setStarted] = useState(false);
   const [paused, setPaused] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
   const running = started && !paused && windowActive;
+
+  useEffect(() => {
+    hydrateScores();
+  }, [hydrateScores]);
 
   useEffect(() => {
     if (started) contentRef.current?.focus();
