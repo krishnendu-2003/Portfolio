@@ -39,7 +39,7 @@ export function StartMenu({
     { kind: "window", id: "resume", label: "Résumé" },
     { kind: "window", id: "contact", label: "Contact" },
     { kind: "separator" },
-    { kind: "window", id: "display-properties", label: "Display Properties" },
+    { kind: "window", id: "wallpaper", label: "Wallpaper" },
     { kind: "action", label: "Reset icon layout", run: resetLayout },
     { kind: "separator" },
     { kind: "window", id: "shutdown", label: "Shut Down…" },
