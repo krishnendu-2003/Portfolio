@@ -41,10 +41,10 @@ export const windowMeta: Record<string, WindowMeta> = {
     defaultSize: { w: 380, h: 360 },
     resizable: true,
   },
-  "display-properties": {
-    title: "Display Properties",
-    icon: "/icons/placeholder.svg",
-    defaultSize: { w: 300, h: 340 },
+  wallpaper: {
+    title: "Wallpaper",
+    icon: "/icons/wallpaper.svg",
+    defaultSize: { w: 320, h: 360 },
     resizable: true,
   },
   shutdown: {
@@ -52,6 +52,24 @@ export const windowMeta: Record<string, WindowMeta> = {
     icon: "/icons/placeholder.svg",
     defaultSize: { w: 320, h: 200 },
     resizable: false,
+  },
+  now: {
+    title: "Now",
+    icon: "/icons/calendar.svg",
+    defaultSize: { w: 320, h: 220 },
+    resizable: true,
+  },
+  "system-properties": {
+    title: "My Machine",
+    icon: "/icons/monitor.svg",
+    defaultSize: { w: 340, h: 340 },
+    resizable: true,
+  },
+  "recycle-bin": {
+    title: "Recycle Bin",
+    icon: "/icons/recycle-bin.svg",
+    defaultSize: { w: 360, h: 380 },
+    resizable: true,
   },
 };
 
@@ -78,4 +96,8 @@ export const DESKTOP_ICON_ORDER = [
   "what-i-do",
   "resume",
   "contact",
+  "now",
+  "system-properties",
+  "recycle-bin",
+  "wallpaper",
 ];

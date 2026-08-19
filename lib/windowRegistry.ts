@@ -6,8 +6,11 @@ import CaseCard from "@/components/apps/CaseCard";
 import CaseStudy from "@/components/apps/CaseStudy";
 import Resume from "@/components/apps/Resume";
 import Contact from "@/components/apps/Contact";
-import DisplayProperties from "@/components/apps/DisplayProperties";
+import Wallpaper from "@/components/apps/Wallpaper";
 import ShutDown from "@/components/apps/ShutDown";
+import Now from "@/components/apps/Now";
+import SystemProperties from "@/components/apps/SystemProperties";
+import RecycleBin from "@/components/apps/RecycleBin";
 import { cases } from "@/content/cases";
 import { windowMeta, type WindowMeta, DESKTOP_ICON_ORDER } from "./windowMeta";
 
@@ -25,8 +28,11 @@ const componentsById: Record<string, ComponentType<{ windowId: string }>> = {
   "what-i-do": wrap(WhatIDo),
   resume: wrap(Resume),
   contact: wrap(Contact),
-  "display-properties": wrap(DisplayProperties),
+  wallpaper: wrap(Wallpaper),
   shutdown: wrap(ShutDown),
+  now: wrap(Now),
+  "system-properties": wrap(SystemProperties),
+  "recycle-bin": wrap(RecycleBin),
 };
 
 for (const item of cases) {
