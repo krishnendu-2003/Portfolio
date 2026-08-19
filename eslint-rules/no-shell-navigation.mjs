@@ -2,7 +2,8 @@
  * Guards §0 of the build spec: nothing inside components/apps/** may navigate
  * the page. An <a href="/..."> or <a href="#..."> is only legal here when
  * paired with an onClick that intercepts it (the §3 crawlable-link exception,
- * which must call preventDefault() + openWindow()).
+ * which must call preventDefault() + openWindow()), or when it carries a
+ * `download` attribute (§6 — a file download, not a page navigation).
  */
 const rule = {
   meta: {
@@ -33,7 +34,10 @@ const rule = {
         const hasOnClick = node.attributes.some(
           (a) => a.type === "JSXAttribute" && a.name.name === "onClick"
         );
-        if (!hasOnClick) {
+        const hasDownload = node.attributes.some(
+          (a) => a.type === "JSXAttribute" && a.name.name === "download"
+        );
+        if (!hasOnClick && !hasDownload) {
           context.report({ node: hrefAttr, messageId: "noShellNav" });
         }
       },

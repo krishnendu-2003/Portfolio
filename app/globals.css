@@ -29,3 +29,12 @@ button.desktop-icon:focus {
   color: #ffffff;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
 }
+
+button.folder-icon,
+button.folder-icon:hover,
+button.folder-icon:active,
+button.folder-icon:focus {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
