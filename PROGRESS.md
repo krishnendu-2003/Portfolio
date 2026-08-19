@@ -129,6 +129,19 @@ by reloading with stale localStorage positions).
 `GAME_IDS` is now `["match", "snake", "tetris"]` — Sweeper/Merge/Paddle
 still come next, unaffected by this insert.
 
+## Interim deploy (user-requested, out of the normal step 4 sequence)
+
+- [x] Redeployed to production at the user's request: `vercel deploy --prod`
+      from commit `685de81` (Match + Snake + Tetris + the Game Boy shell,
+      no Sweeper/Merge/Paddle yet). Live at
+      `https://krishnendu-portfolio-chi.vercel.app` — verified 200s on
+      `/`, `/work/lumeo`, `/about`, `/resume`, and the homepage `<title>`.
+      Deployment id `dpl_3EfwEirYec6Ag53NhSr9hBjUh8WQ`.
+      **This is not the same as finishing item 4 below** — no live
+      Lighthouse run, no bundle-size table, no redaction sweep were done
+      as part of this deploy. Do those once Sweeper/Merge/Paddle land (or
+      sooner, if asked), against whatever commit is live at the time.
+
 ## In progress / next up — pick up here after `/clear`
 
 - [ ] 3c (3/5). Sweeper — grid minesweeping, original chrome/numeral
