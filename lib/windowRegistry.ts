@@ -53,7 +53,7 @@ export const windowRegistry: Record<string, WindowRegistryEntry> = {
     title: "Contact",
     icon: "/icons/mail.svg",
     component: wrap(Contact),
-    defaultSize: { w: 380, h: 400 },
+    defaultSize: { w: 380, h: 300 },
     resizable: true,
   },
 };
