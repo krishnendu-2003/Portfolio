@@ -1,8 +1,17 @@
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import { useWindowStore } from "@/lib/windowStore";
 import { useScoresStore } from "@/lib/scoresStore";
+
+// Whether the game should currently be simulating/animating — exposed via
+// context (not a render-prop) so a game can call useGameLoop with it at
+// its own top level, satisfying the rules of hooks instead of nesting a
+// hook call inside a children-as-function closure.
+const RunningContext = createContext(false);
+export function useGameRunning() {
+  return useContext(RunningContext);
+}
 
 // A game only runs while its own window is the focused, non-minimized,
 // visible one — pause on blur/minimize/back-stack/tab-hide, genuinely
@@ -41,7 +50,7 @@ export function GameShell({
   instructions: string;
   onReset?: () => void;
   onKeyDown?: (e: React.KeyboardEvent<HTMLDivElement>) => void;
-  children: (opts: { running: boolean }) => ReactNode;
+  children: ReactNode;
 }) {
   const windowActive = useWindowActive(windowId);
   const hydrateScores = useScoresStore((s) => s.hydrate);
@@ -100,7 +109,7 @@ export function GameShell({
           onKeyDown?.(e);
         }}
       >
-        {children({ running })}
+        <RunningContext.Provider value={running}>{children}</RunningContext.Provider>
         {!started && (
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-white">
             <button type="button" onClick={() => setStarted(true)} autoFocus>

@@ -130,33 +130,31 @@ export default function Match({ windowId }: { windowId: string }) {
 
   return (
     <GameShell windowId={windowId} instructions="Find every pair. Fewer moves is better." onReset={reset}>
-      {() => (
-        <div className="flex h-full flex-col items-center justify-center gap-2 p-2">
-          <div className="grid grid-cols-4 gap-1.5">
-            {deck.map((card, i) => {
-              const faceUp = card.matched || flipped.includes(i);
-              return (
-                <button
-                  key={card.id}
-                  type="button"
-                  aria-label={faceUp ? `Card showing shape ${card.symbol + 1}` : "Face-down card"}
-                  onClick={() => flip(i)}
-                  disabled={card.matched}
-                  className="flex h-12 w-12 items-center justify-center border border-gray-500"
-                  style={{ background: faceUp ? "#ffffff" : "#000080" }}
-                >
-                  {faceUp && <Glyph index={card.symbol} />}
-                </button>
-              );
-            })}
-          </div>
-          <p className="text-xs">
-            Moves: {moves}
-            {best !== undefined ? ` — Best: ${best}` : ""}
-          </p>
-          {won && <p className="font-bold">Solved in {moves} moves!</p>}
+      <div className="flex h-full flex-col items-center justify-center gap-2 p-2">
+        <div className="grid grid-cols-4 gap-1.5">
+          {deck.map((card, i) => {
+            const faceUp = card.matched || flipped.includes(i);
+            return (
+              <button
+                key={card.id}
+                type="button"
+                aria-label={faceUp ? `Card showing shape ${card.symbol + 1}` : "Face-down card"}
+                onClick={() => flip(i)}
+                disabled={card.matched}
+                className="flex h-12 w-12 items-center justify-center border border-gray-500"
+                style={{ background: faceUp ? "#ffffff" : "#000080" }}
+              >
+                {faceUp && <Glyph index={card.symbol} />}
+              </button>
+            );
+          })}
         </div>
-      )}
+        <p className="text-xs">
+          Moves: {moves}
+          {best !== undefined ? ` — Best: ${best}` : ""}
+        </p>
+        {won && <p className="font-bold">Solved in {moves} moves!</p>}
+      </div>
     </GameShell>
   );
 }
