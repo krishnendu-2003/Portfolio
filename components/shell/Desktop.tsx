@@ -14,7 +14,7 @@ export function Desktop() {
   return (
     <div className="fixed inset-0 flex flex-col" style={{ background: "#008080" }}>
       <div className="relative flex-1">
-        <div className="grid grid-cols-[repeat(auto-fill,80px)] content-start gap-2 p-4">
+        <div className="grid grid-cols-3 content-start gap-4 overflow-y-auto p-4 md:grid-cols-[repeat(auto-fill,80px)] md:gap-2 md:overflow-visible">
           {DESKTOP_ICON_ORDER.map((id) => (
             <DesktopIcon key={id} id={id} entry={windowRegistry[id]} />
           ))}

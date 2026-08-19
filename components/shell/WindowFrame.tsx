@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { useWindowStore, TASKBAR_HEIGHT } from "@/lib/windowStore";
+import { useWindowStore, TASKBAR_HEIGHT, MOBILE_TASKBAR_HEIGHT } from "@/lib/windowStore";
 import { restoreFocusOrigin } from "@/lib/focusReturn";
 import { windowRegistry } from "@/lib/windowRegistry";
+import { useIsMobile } from "@/lib/useIsMobile";
 
 type DragState = {
   originX: number;
@@ -43,6 +44,7 @@ export function WindowFrame({ id }: { id: string }) {
   const toggleMaximize = useWindowStore((s) => s.toggleMaximize);
   const moveWindow = useWindowStore((s) => s.moveWindow);
   const resizeWindow = useWindowStore((s) => s.resizeWindow);
+  const isMobile = useIsMobile();
 
   const containerRef = useRef<HTMLDivElement>(null);
   const dragState = useRef<DragState | null>(null);
@@ -142,9 +144,13 @@ export function WindowFrame({ id }: { id: string }) {
     resizeState.current = null;
   }
 
-  const style: React.CSSProperties = win.maximized
-    ? { position: "fixed", left: 0, top: 0, right: 0, bottom: TASKBAR_HEIGHT, zIndex: win.z }
-    : { position: "fixed", left: win.x, top: win.y, width: win.w, height: win.h, zIndex: win.z };
+  const style: React.CSSProperties = isMobile
+    ? { position: "fixed", left: 0, top: 0, right: 0, bottom: MOBILE_TASKBAR_HEIGHT, zIndex: win.z }
+    : win.maximized
+      ? { position: "fixed", left: 0, top: 0, right: 0, bottom: TASKBAR_HEIGHT, zIndex: win.z }
+      : { position: "fixed", left: win.x, top: win.y, width: win.w, height: win.h, zIndex: win.z };
+
+  const hidden = win.minimized || (isMobile && !isTop);
 
   return (
     <div
@@ -154,7 +160,7 @@ export function WindowFrame({ id }: { id: string }) {
       aria-labelledby={titleId}
       tabIndex={-1}
       className="window flex flex-col"
-      style={{ ...style, display: win.minimized ? "none" : "flex" }}
+      style={{ ...style, display: hidden ? "none" : "flex" }}
       onPointerDownCapture={() => focusWindow(id)}
     >
       <div
@@ -167,19 +173,23 @@ export function WindowFrame({ id }: { id: string }) {
           {win.title}
         </div>
         <div className="title-bar-controls">
-          <button type="button" aria-label="Minimize" onClick={() => minimizeWindow(id)} />
-          <button
-            type="button"
-            aria-label={win.maximized ? "Restore" : "Maximize"}
-            onClick={() => toggleMaximize(id)}
-          />
+          {!isMobile && (
+            <>
+              <button type="button" aria-label="Minimize" onClick={() => minimizeWindow(id)} />
+              <button
+                type="button"
+                aria-label={win.maximized ? "Restore" : "Maximize"}
+                onClick={() => toggleMaximize(id)}
+              />
+            </>
+          )}
           <button type="button" aria-label="Close" onClick={handleClose} />
         </div>
       </div>
       <div className="window-body flex-1 overflow-auto">
         {entry ? <entry.component windowId={id} /> : null}
       </div>
-      {!win.maximized && entry?.resizable !== false && (
+      {!isMobile && !win.maximized && entry?.resizable !== false && (
         <div
           className="resize-handle"
           onPointerDown={onResizePointerDown}

@@ -15,12 +15,12 @@ export default function SelectedWork() {
   }
 
   return (
-    <div className="grid grid-cols-[repeat(auto-fill,80px)] content-start gap-2 p-2">
+    <div className="grid grid-cols-3 content-start gap-4 p-2 md:grid-cols-[repeat(auto-fill,80px)] md:gap-2">
       {cases.map((item) => (
         <a
           key={item.slug}
           href={`/work/${item.slug}`}
-          className="folder-icon flex w-20 flex-col items-center gap-1 p-1 text-center"
+          className="folder-icon flex w-full flex-col items-center gap-1 p-1 text-center md:w-20"
           onClick={(e) => {
             e.preventDefault();
             open(item, e.currentTarget);

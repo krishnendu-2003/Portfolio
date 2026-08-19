@@ -2,13 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { useWindowStore } from "@/lib/windowStore";
+import { restoreFocusOrigin } from "@/lib/focusReturn";
 
-export function Taskbar() {
-  const windows = useWindowStore((s) => s.windows);
-  const order = useWindowStore((s) => s.order);
-  const focusWindow = useWindowStore((s) => s.focusWindow);
-  const minimizeWindow = useWindowStore((s) => s.minimizeWindow);
-
+function useClock() {
   const [time, setTime] = useState<string | null>(null);
 
   useEffect(() => {
@@ -20,11 +16,30 @@ export function Taskbar() {
     return () => clearInterval(interval);
   }, []);
 
+  return time;
+}
+
+function topWindow(windows: Record<string, { id: string; z: number; minimized: boolean }>) {
+  const visible = Object.values(windows).filter((w) => !w.minimized);
+  if (visible.length === 0) return null;
+  return visible.reduce((a, b) => (b.z > a.z ? b : a));
+}
+
+function DesktopTaskbar() {
+  const windows = useWindowStore((s) => s.windows);
+  const order = useWindowStore((s) => s.order);
+  const focusWindow = useWindowStore((s) => s.focusWindow);
+  const minimizeWindow = useWindowStore((s) => s.minimizeWindow);
+  const time = useClock();
+
   const zValues = Object.values(windows).map((w) => w.z);
   const maxZ = zValues.length > 0 ? Math.max(...zValues) : 0;
 
   return (
-    <div className="flex h-10 items-center gap-2 border-t-2 px-2" style={{ background: "silver" }}>
+    <div
+      className="hidden h-10 items-center gap-2 border-t-2 px-2 md:flex"
+      style={{ background: "silver" }}
+    >
       <button type="button" className="font-bold">
         Start
       </button>
@@ -57,5 +72,42 @@ export function Taskbar() {
         {time ?? ""}
       </div>
     </div>
+  );
+}
+
+function MobileTaskbar() {
+  const windows = useWindowStore((s) => s.windows);
+  const closeWindow = useWindowStore((s) => s.closeWindow);
+
+  const top = topWindow(windows);
+
+  return (
+    <div
+      className="flex h-12 items-center gap-2 border-t-2 px-3 md:hidden"
+      style={{ background: "silver" }}
+    >
+      <button
+        type="button"
+        disabled={!top}
+        aria-label="Back"
+        onClick={() => {
+          if (!top) return;
+          closeWindow(top.id);
+          restoreFocusOrigin(top.id);
+        }}
+      >
+        ← Back
+      </button>
+      <span className="flex-1 truncate text-xs">{top ? windows[top.id].title : "Desktop"}</span>
+    </div>
+  );
+}
+
+export function Taskbar() {
+  return (
+    <>
+      <DesktopTaskbar />
+      <MobileTaskbar />
+    </>
   );
 }

@@ -33,6 +33,7 @@ const MIN_VISIBLE = 80;
 const MIN_W = 240;
 const MIN_H = 160;
 export const TASKBAR_HEIGHT = 40;
+export const MOBILE_TASKBAR_HEIGHT = 48;
 
 function viewport() {
   if (typeof window === "undefined") return { vw: 1280, vh: 800 };
