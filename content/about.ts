@@ -5,7 +5,7 @@ export const aboutMe = {
     "AI/ML and frontend engineer based in Kolkata. Currently CTO & Co-founder at Lumeo, an AI-native financial operating system for Indian independent workers and exporters — I own the machine-learning layer (five production models behind a Python inference service) end-to-end, along with the entire frontend.",
     "Alongside Lumeo, I'm a Software Developer Intern at Tech Vortex Ventures, building and maintaining a React Native mobile app and web platform — real-time chat over WebSockets, push notifications, Firebase auth. Before that, at Catoff Gaming, I integrated live data for Fortnite, Marvel Rivals, and CS:GO, streamlining project workflows and cutting overhead by 25%.",
     "Outside of work I build things I care about: FirmDev, an in-browser IoT development tool that generates Arduino code with Gemini; SwitchSocial, a Solana-based platform for creator monetization; and Luminere, a full site build for a content agency. Two-time hackathon winner — Prayash 2024 (hardware) and Binary 2025 (deepfake detection) — and a Superteam India contributor.",
-    "Second-year B.Tech in Computer Science and Engineering at Sister Nivedita University (MAKAUT), Kolkata, specializing in Artificial Intelligence and Machine Learning.",
+    "B.Tech in Computer Science and Engineering from Sister Nivedita University (MAKAUT), Kolkata — graduated 2026, specializing in Artificial Intelligence and Machine Learning.",
   ],
 };
 
@@ -25,14 +25,15 @@ export const whatIDo = {
 
 export const resume = {
   name: "Krishnendu Samanta",
-  objective: "Fullstack developer, seeking a full-time opportunity as a fresher.",
+  objective:
+    "CTO & Co-founder at Lumeo, an AI-native financial operating system for Indian independent workers and exporters. Fullstack and AI/ML engineer at the intersection of production models and product.",
   location: "P.O. Ganganagar, Kolkata 700132, West Bengal",
   education: [
     {
       degree: "Bachelor of Technology in Computer Science and Engineering",
       school: "Sister Nivedita University",
       detail: "Specialization: Artificial Intelligence and Machine Learning",
-      period: "Sep 2022 – Present",
+      period: "Sep 2022 – 2026",
     },
     {
       degree: "High School (Science Stream)",
