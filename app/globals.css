@@ -1,0 +1,10 @@
+@import "tailwindcss";
+@import "98.css/dist/98.css";
+
+:root {
+  --font-mono: var(--font-jetbrains-mono);
+}
+
+body {
+  font-family: var(--font-mono), monospace;
+}
