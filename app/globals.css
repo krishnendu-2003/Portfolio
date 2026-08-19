@@ -8,3 +8,24 @@
 body {
   font-family: var(--font-mono), monospace;
 }
+
+.resize-handle {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 14px;
+  height: 14px;
+  cursor: nwse-resize;
+  touch-action: none;
+}
+
+button.desktop-icon,
+button.desktop-icon:hover,
+button.desktop-icon:active,
+button.desktop-icon:focus {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  color: #ffffff;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+}
