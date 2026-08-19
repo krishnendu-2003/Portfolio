@@ -93,6 +93,42 @@ by reloading with stale localStorage positions).
       "one hook returns refs+state, one descendant component consumes it"
       shape Snake uses.
 
+## Out-of-plan addition (user-requested mid-pass, after this checkpoint)
+
+- [x] **Tetris** — not in the original SCOPE; the user explicitly asked for
+      it by name after this file's last checkpoint. This directly
+      contradicts the master prompt's own IP-rules section ("NO
+      falling-tetromino game... it is off the list entirely", citing
+      *Tetris Holding, LLC v. Xio Interactive*). **I flagged this conflict
+      to the user before writing any code; they explicitly chose to ship
+      literal Tetris anyway, informed of the legal exposure.** Standard 7
+      tetrominoes/4 rotations/10x20 board/next-piece preview/classic
+      scoring, rendered in the shell's monochrome green rather than the
+      colorful Guideline palette. See the commit message
+      (`07dc941`) for full detail — worth reading if a future session or
+      the user revisits whether to keep it.
+- [x] **Game Boy-style shell** — also user-requested, applies to
+      `GameShell.tsx` so every game gets it for free (putty shell, green
+      LCD tint over each game's own canvas, scanlines, pill-shaped
+      START/PAUSE/RESET buttons). Not a reproduction of any specific
+      console's exact shell color/trade dress. Re-verified Match and Snake
+      still work correctly under the new shell.
+- [x] Bug found and fixed while building Tetris: `iconPositionsStore`
+      collisions were already fixed earlier, unrelated — see the actual
+      finding below, which is about **testing environment, not app code**:
+      `document.hidden` reports `true` in this session's automated Chrome
+      tab even while it's the focused tab. GameShell's pause-on-tab-hide
+      logic is *correct* (per spec) and refuses to run while hidden — so
+      a game can look "stuck on a blank/unrendered canvas" when
+      smoke-tested via this tooling even though it works fine for a real
+      user. Diagnosed by temporarily bypassing the check, confirming full
+      gameplay (movement/rotation/hard-drop/locking) worked, then
+      reverting. **If this recurs when testing Sweeper/Merge/Paddle,
+      don't assume a game-logic bug — check `document.hidden` first.**
+
+`GAME_IDS` is now `["match", "snake", "tetris"]` — Sweeper/Merge/Paddle
+still come next, unaffected by this insert.
+
 ## In progress / next up — pick up here after `/clear`
 
 - [ ] 3c (3/5). Sweeper — grid minesweeping, original chrome/numeral
@@ -136,7 +172,7 @@ by reloading with stale localStorage positions).
 
 - Games so far live in `components/apps/games/`: `useGameLoop.ts`,
   `GameShell.tsx` (+ `useGameRunning`/`useWindowActive`), `Match.tsx`,
-  `Snake.tsx`. Copy Snake's split (a `useXGame()` hook holding refs/state,
+  `Snake.tsx`, `Tetris.tsx`. Copy Snake's/Tetris's split (a `useXGame()` hook holding refs/state,
   called from the outer non-descendant component; a `XBoard` descendant
   component that calls `useGameRunning()`/`useGameLoop()` and destructures
   the hook's return before using it in JSX) for Sweeper/Merge/Paddle if
