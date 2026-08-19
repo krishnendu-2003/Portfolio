@@ -19,4 +19,9 @@ export const GAME_CATALOG: Record<string, GameCatalogEntry> = {
     higherIsBetter: true,
     formatScore: (v) => `${v} eaten`,
   },
+  tetris: {
+    title: "Tetris",
+    higherIsBetter: true,
+    formatScore: (v) => `${v} pts`,
+  },
 };
