@@ -5,8 +5,8 @@
  * a link; see components/shell/ExternalLink.tsx.
  */
 export const EXTERNAL_LINKS: Record<string, string> = {
-  github: "",
+  github: "https://github.com/krishnendu-2003",
   linkedin: "https://www.linkedin.com/in/echowhisper/",
-  x: "",
-  lumeo: "",
+  x: "https://x.com/echo_Whisper03",
+  lumeo: "https://www.lumeo.co.in/",
 };

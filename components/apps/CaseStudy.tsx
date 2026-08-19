@@ -1,4 +1,6 @@
 import { caseBySlug } from "@/content/cases";
+import { ExternalLink } from "@/components/shell/ExternalLink";
+import { EXTERNAL_LINKS } from "@/lib/externalLinks";
 
 export default function CaseStudy({ windowId }: { windowId: string }) {
   const slug = windowId.replace(/^case-/, "").replace(/-full$/, "");
@@ -14,6 +16,11 @@ export default function CaseStudy({ windowId }: { windowId: string }) {
       {item.body.map((paragraph, i) => (
         <p key={i}>{paragraph}</p>
       ))}
+      {slug === "lumeo" && (
+        <p>
+          <ExternalLink href={EXTERNAL_LINKS.lumeo} label="Visit Lumeo" />
+        </p>
+      )}
     </div>
   );
 }

@@ -15,11 +15,11 @@ export default function AboutPage() {
         <h1 className="text-2xl font-bold">{aboutMe.name}</h1>
         <p className="opacity-70">{aboutMe.tagline}</p>
       </div>
-      <ul className="flex flex-col gap-1">
-        {aboutMe.lines.map((line) => (
-          <li key={line}>{line}</li>
+      <div className="flex flex-col gap-3">
+        {aboutMe.paragraphs.map((paragraph, i) => (
+          <p key={i}>{paragraph}</p>
         ))}
-      </ul>
+      </div>
       <div>
         <h2 className="text-xl font-semibold">What I Do</h2>
         {whatIDo.paragraphs.map((paragraph, i) => (

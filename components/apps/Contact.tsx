@@ -32,6 +32,12 @@ export default function Contact() {
         <span>
           LinkedIn: <ExternalLink href={EXTERNAL_LINKS.linkedin} label="echowhisper" />
         </span>
+        <span>
+          GitHub: <ExternalLink href={EXTERNAL_LINKS.github} label="krishnendu-2003" />
+        </span>
+        <span>
+          X: <ExternalLink href={EXTERNAL_LINKS.x} label="echo_Whisper03" />
+        </span>
         <span>Location: Kolkata, India</span>
       </div>
       <button

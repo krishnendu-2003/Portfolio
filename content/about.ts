@@ -1,10 +1,11 @@
 export const aboutMe = {
   name: "Krishnendu Samanta",
-  tagline: "AI/ML and frontend engineer.",
-  lines: [
-    "CTO & Co-founder at Lumeo.",
-    "Second-year B.Tech, Sister Nivedita University (MAKAUT), Kolkata.",
-    "Superteam India contributor.",
+  tagline: "AI/ML and frontend engineer building Lumeo.",
+  paragraphs: [
+    "AI/ML and frontend engineer based in Kolkata. Currently CTO & Co-founder at Lumeo, an AI-native financial operating system for Indian independent workers and exporters — I own the machine-learning layer (five production models behind a Python inference service) end-to-end, along with the entire frontend.",
+    "Alongside Lumeo, I'm a Software Developer Intern at Tech Vortex Ventures, building and maintaining a React Native mobile app and web platform — real-time chat over WebSockets, push notifications, Firebase auth. Before that, at Catoff Gaming, I integrated live data for Fortnite, Marvel Rivals, and CS:GO, streamlining project workflows and cutting overhead by 25%.",
+    "Outside of work I build things I care about: FirmDev, an in-browser IoT development tool that generates Arduino code with Gemini; SwitchSocial, a Solana-based platform for creator monetization; and Luminere, a full site build for a content agency. Two-time hackathon winner — Prayash 2024 (hardware) and Binary 2025 (deepfake detection) — and a Superteam India contributor.",
+    "Second-year B.Tech in Computer Science and Engineering at Sister Nivedita University (MAKAUT), Kolkata, specializing in Artificial Intelligence and Machine Learning.",
   ],
 };
 

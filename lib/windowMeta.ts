@@ -38,7 +38,7 @@ export const windowMeta: Record<string, WindowMeta> = {
   contact: {
     title: "Contact",
     icon: "/icons/mail.svg",
-    defaultSize: { w: 380, h: 300 },
+    defaultSize: { w: 380, h: 360 },
     resizable: true,
   },
 };
