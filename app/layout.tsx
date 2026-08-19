@@ -27,7 +27,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={jetbrainsMono.variable}>
+    <html lang="en" className={jetbrainsMono.variable} suppressHydrationWarning>
       <head>
         <Script id="wallpaper-prepaint" strategy="beforeInteractive">
           {WALLPAPER_PREPAINT_SCRIPT}
