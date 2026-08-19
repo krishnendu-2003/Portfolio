@@ -85,6 +85,84 @@ select:focus-visible {
   outline-offset: 1px;
 }
 
+/* Display Properties wallpapers — CSS-only, no image files. Contrast
+   computed against the .desktop-icon white label text (see the pass/fail
+   table in the commit message): teal/starfield/neon-grid/diagonal/
+   terminal-green/nebula all clear 4.5:1+ as-is; clouds and sunset fail
+   badly at their lightest points and get the dark-text override below. */
+html[data-wallpaper="clouds"] .desktop-root {
+  background: linear-gradient(180deg, #bfe3f7, #eaf6ff);
+}
+
+html[data-wallpaper="sunset"] .desktop-root {
+  background: linear-gradient(180deg, #2b1055 0%, #8a3b6b 45%, #ee7752 75%, #f7b267 100%);
+}
+
+html[data-wallpaper="starfield"] .desktop-root {
+  background-color: #05070f;
+  background-image:
+    radial-gradient(circle at 15% 25%, #ffffff 0 1px, transparent 1px),
+    radial-gradient(circle at 65% 55%, #ffffff 0 1px, transparent 1px),
+    radial-gradient(circle at 35% 80%, #ffffff 0 1px, transparent 1px),
+    radial-gradient(circle at 85% 15%, #ffffff 0 1px, transparent 1px),
+    radial-gradient(circle at 50% 40%, #ffffff 0 1px, transparent 1px);
+  background-size:
+    70px 70px,
+    110px 110px,
+    60px 60px,
+    140px 140px,
+    90px 90px;
+}
+
+html[data-wallpaper="neon-grid"] .desktop-root {
+  background-color: #0a0020;
+  background-image:
+    linear-gradient(rgba(255, 0, 200, 0.35) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 255, 0.35) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+html[data-wallpaper="diagonal"] .desktop-root {
+  background-color: #004d4d;
+  background-image: repeating-linear-gradient(
+    45deg,
+    #006666 0px,
+    #006666 10px,
+    #004d4d 10px,
+    #004d4d 20px
+  );
+}
+
+html[data-wallpaper="terminal-green"] .desktop-root {
+  background-color: #001a00;
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(0, 255, 100, 0.04) 0px,
+    rgba(0, 255, 100, 0.04) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+}
+
+html[data-wallpaper="nebula"] .desktop-root {
+  background-color: #05010f;
+  background-image:
+    radial-gradient(circle at 25% 35%, rgba(180, 80, 220, 0.45), transparent 50%),
+    radial-gradient(circle at 75% 65%, rgba(60, 120, 220, 0.45), transparent 50%);
+}
+
+html[data-wallpaper="clouds"] button.desktop-icon,
+html[data-wallpaper="clouds"] button.desktop-icon:hover,
+html[data-wallpaper="clouds"] button.desktop-icon:active,
+html[data-wallpaper="clouds"] button.desktop-icon:focus,
+html[data-wallpaper="sunset"] button.desktop-icon,
+html[data-wallpaper="sunset"] button.desktop-icon:hover,
+html[data-wallpaper="sunset"] button.desktop-icon:active,
+html[data-wallpaper="sunset"] button.desktop-icon:focus {
+  color: #000000;
+  text-shadow: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
