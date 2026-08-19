@@ -46,11 +46,32 @@ redaction grep clean.
       `DesktopIcon`/`Desktop` contract — keep it in mind if Games'
       folder-window icons or anything else reuses `DesktopIcon`.
 
+- [x] 3a. Shared game engine — `components/apps/games/useGameLoop.ts` (fixed
+      60Hz accumulator, decoupled from render) + `GameShell.tsx`
+      (`useWindowActive` pause-on-blur/minimize/tab-hide, Start gate, P/Pause
+      button, scoped keyboard div). `lib/soundStore.ts` + `lib/beep.ts`
+      (WebAudio square-wave, muted by default, taskbar toggle added) +
+      `lib/scoresStore.ts` (`portfolio:scores:v1`).
+- [x] 3b. Games folder window (desktop icon, original controller SVG) —
+      `GAME_IDS` in `lib/windowMeta.ts` is the single list every game
+      registers into; GamesFolder/Start-Menu-Games-submenu/HighScores all
+      read it, so nothing needs updating in 3 places per game.
+- [x] 3d. High Scores window — reads `scoresStore`, formats via
+      `lib/gameCatalog.ts` (kept separate from code-split game components
+      so formatting never triggers a game chunk load), Clear behind
+      inline confirm.
+- [x] Bug fix (found while smoke-testing): desktop icons could collide —
+      `iconPositionsStore.hydrate()` now resolves collisions the same way
+      `moveIcon` does. Real bug, will keep mattering as more icons are added.
+
+All of the above smoke-tested live (Games folder opens, High Scores opens
+as its child exactly like "Open full case", icon collision fix verified
+by reloading with stale localStorage positions).
+
 ## In progress / next up
-- [ ] 3a. Shared game engine (useGameLoop, GameShell)
-- [ ] 3b. Games folder window + Start Menu entry
-- [ ] 3c. Match, Snake, Sweeper, Merge, Paddle
-- [ ] 3d. High Scores window
+
+- [ ] 3c. Match, Snake, Sweeper, Merge, Paddle — build in this order, each
+      commit adds its id to `GAME_IDS` + a `GAME_CATALOG` entry
 - [ ] 4. Final pass (redaction sweep, bundle table, deploy, live Lighthouse,
       regression check)
 
