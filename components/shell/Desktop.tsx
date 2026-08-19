@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useWindowStore } from "@/lib/windowStore";
 import { windowRegistry, DESKTOP_ICON_ORDER } from "@/lib/windowRegistry";
 import { useUrlSync } from "@/lib/urlSync";
@@ -19,6 +19,7 @@ export function Desktop() {
   const positions = useIconPositionsStore((s) => s.positions);
   const moveIcon = useIconPositionsStore((s) => s.moveIcon);
   const hydrate = useIconPositionsStore((s) => s.hydrate);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
 
   useEffect(() => {
     hydrate();
@@ -30,6 +31,9 @@ export function Desktop() {
         <div
           ref={containerRef}
           onKeyDown={onKeyDown}
+          onPointerDown={(e) => {
+            if (!(e.target as HTMLElement).closest("[data-icon]")) setSelectedId(null);
+          }}
           className={
             isMobile
               ? "grid grid-cols-3 content-start gap-4 overflow-y-auto p-4"
@@ -43,6 +47,8 @@ export function Desktop() {
               entry={windowRegistry[id]}
               cell={positions[id] ?? [0, 0]}
               onMove={moveIcon}
+              selected={selectedId === id}
+              onSelect={() => setSelectedId(id)}
             />
           ))}
         </div>
