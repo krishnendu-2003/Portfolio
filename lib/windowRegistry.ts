@@ -12,6 +12,8 @@ import ShutDown from "@/components/apps/ShutDown";
 import Now from "@/components/apps/Now";
 import SystemProperties from "@/components/apps/SystemProperties";
 import RecycleBin from "@/components/apps/RecycleBin";
+import GamesFolder from "@/components/apps/GamesFolder";
+import HighScores from "@/components/apps/HighScores";
 import { cases } from "@/content/cases";
 
 // Heavy, canvas-driven apps split into their own chunk, loaded only when
@@ -39,6 +41,8 @@ const componentsById: Record<string, ComponentType<{ windowId: string }>> = {
   "system-properties": wrap(SystemProperties),
   "recycle-bin": wrap(RecycleBin),
   sketchpad: wrap(Sketchpad),
+  games: GamesFolder,
+  "high-scores": wrap(HighScores),
 };
 
 for (const item of cases) {

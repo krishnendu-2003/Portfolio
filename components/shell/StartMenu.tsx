@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, type RefObject } from "react";
 import { useWindowStore } from "@/lib/windowStore";
 import { useIconPositionsStore } from "@/lib/iconPositionsStore";
-import { windowMeta } from "@/lib/windowMeta";
+import { windowMeta, GAME_IDS } from "@/lib/windowMeta";
 import { cases } from "@/content/cases";
 
 type SubItem = { id: string; label: string };
@@ -26,7 +26,9 @@ export function StartMenu({
   const rootRef = useRef<HTMLDivElement>(null);
   const itemRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const submenuRefs = useRef<(HTMLButtonElement | null)[]>([]);
-  const [submenuOpen, setSubmenuOpen] = useState(false);
+  // Index into `items` of the currently-open submenu, or null — only one
+  // submenu (Selected Work, Games) can be open at a time.
+  const [openSubmenuIndex, setOpenSubmenuIndex] = useState<number | null>(null);
 
   const items: MenuItem[] = [
     {
@@ -39,6 +41,15 @@ export function StartMenu({
     { kind: "window", id: "resume", label: "Résumé" },
     { kind: "window", id: "contact", label: "Contact" },
     { kind: "separator" },
+    ...(GAME_IDS.length > 0
+      ? [
+          {
+            kind: "submenu" as const,
+            label: "Games",
+            items: GAME_IDS.map((id) => ({ id, label: windowMeta[id].title })),
+          },
+        ]
+      : []),
     { kind: "window", id: "sketchpad", label: "Sketchpad" },
     { kind: "separator" },
     { kind: "window", id: "wallpaper", label: "Wallpaper" },
@@ -50,10 +61,9 @@ export function StartMenu({
   const focusableIndices = items
     .map((item, i) => (item.kind === "separator" ? -1 : i))
     .filter((i) => i !== -1);
-  const submenuIndex = items.findIndex((item) => item.kind === "submenu");
 
   function close() {
-    setSubmenuOpen(false);
+    setOpenSubmenuIndex(null);
     onClose();
     anchorRef.current?.focus();
   }
@@ -96,8 +106,9 @@ export function StartMenu({
     itemRefs.current[next]?.focus();
   }
 
-  function openSubmenu() {
-    setSubmenuOpen(true);
+  function openSubmenu(index: number) {
+    setOpenSubmenuIndex(index);
+    submenuRefs.current = [];
     requestAnimationFrame(() => submenuRefs.current[0]?.focus());
   }
 
@@ -114,7 +125,7 @@ export function StartMenu({
       case "ArrowRight":
         if (item.kind === "submenu") {
           e.preventDefault();
-          openSubmenu();
+          openSubmenu(index);
         }
         break;
       case "Escape":
@@ -125,7 +136,7 @@ export function StartMenu({
       case "Enter":
       case " ":
         e.preventDefault();
-        if (item.kind === "submenu") openSubmenu();
+        if (item.kind === "submenu") openSubmenu(index);
         else activate(item);
         break;
       default:
@@ -136,7 +147,8 @@ export function StartMenu({
   function onSubmenuKeyDown(
     e: React.KeyboardEvent<HTMLButtonElement>,
     index: number,
-    subItems: SubItem[]
+    subItems: SubItem[],
+    parentIndex: number
   ) {
     switch (e.key) {
       case "ArrowDown":
@@ -149,8 +161,8 @@ export function StartMenu({
         break;
       case "ArrowLeft":
         e.preventDefault();
-        setSubmenuOpen(false);
-        itemRefs.current[submenuIndex]?.focus();
+        setOpenSubmenuIndex(null);
+        itemRefs.current[parentIndex]?.focus();
         break;
       case "Escape":
         e.preventDefault();
@@ -194,6 +206,7 @@ export function StartMenu({
               <li key={`sep-${i}`} role="separator" className="my-1 border-t border-gray-400" />
             );
           }
+          const submenuOpen = item.kind === "submenu" && openSubmenuIndex === i;
           return (
             <li key={`${item.kind}-${item.label}`} className="relative">
               <button
@@ -207,13 +220,13 @@ export function StartMenu({
                 aria-expanded={item.kind === "submenu" ? submenuOpen : undefined}
                 className="flex w-full items-center justify-between px-2 py-1 text-left hover:bg-[#000080] hover:text-white focus:bg-[#000080] focus:text-white focus:outline-none"
                 onClick={() => {
-                  if (item.kind === "submenu") openSubmenu();
+                  if (item.kind === "submenu") openSubmenu(i);
                   else activate(item);
                 }}
                 onKeyDown={(e) => onItemKeyDown(e, i, item)}
                 onMouseEnter={() => {
                   itemRefs.current[i]?.focus();
-                  setSubmenuOpen(item.kind === "submenu");
+                  setOpenSubmenuIndex(item.kind === "submenu" ? i : null);
                 }}
               >
                 <span>{item.label}</span>
@@ -239,7 +252,7 @@ export function StartMenu({
                           openById(sub.id);
                           close();
                         }}
-                        onKeyDown={(e) => onSubmenuKeyDown(e, si, item.items)}
+                        onKeyDown={(e) => onSubmenuKeyDown(e, si, item.items, i)}
                       >
                         {sub.label}
                       </button>

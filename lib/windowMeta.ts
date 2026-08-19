@@ -77,7 +77,25 @@ export const windowMeta: Record<string, WindowMeta> = {
     defaultSize: { w: 520, h: 460 },
     resizable: true,
   },
+  games: {
+    title: "Games",
+    icon: "/icons/games.svg",
+    defaultSize: { w: 380, h: 300 },
+    resizable: true,
+  },
+  "high-scores": {
+    title: "High Scores",
+    icon: "/icons/trophy.svg",
+    defaultSize: { w: 320, h: 360 },
+    resizable: true,
+  },
 };
+
+// Filled in as each game is registered below (Phase 2 3c) — the single
+// source of truth GamesFolder, the Start Menu's Games submenu, and
+// High Scores all read from, so nothing has to be updated in three
+// places per game.
+export const GAME_IDS: string[] = [];
 
 // Case cards + full case windows, opened from inside the Selected Work
 // folder — not shown as top-level desktop icons.
@@ -107,4 +125,5 @@ export const DESKTOP_ICON_ORDER = [
   "recycle-bin",
   "wallpaper",
   "sketchpad",
+  "games",
 ];
