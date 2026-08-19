@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useWindowStore } from "@/lib/windowStore";
 import { restoreFocusOrigin } from "@/lib/focusReturn";
+import { StartMenu } from "./StartMenu";
 
 function useClock() {
   const [time, setTime] = useState<string | null>(null);
@@ -31,6 +32,8 @@ function DesktopTaskbar() {
   const focusWindow = useWindowStore((s) => s.focusWindow);
   const minimizeWindow = useWindowStore((s) => s.minimizeWindow);
   const time = useClock();
+  const [startOpen, setStartOpen] = useState(false);
+  const startButtonRef = useRef<HTMLButtonElement>(null);
 
   const zValues = Object.values(windows).map((w) => w.z);
   const maxZ = zValues.length > 0 ? Math.max(...zValues) : 0;
@@ -40,9 +43,21 @@ function DesktopTaskbar() {
       className="hidden h-10 items-center gap-2 border-t-2 px-2 md:flex"
       style={{ background: "silver" }}
     >
-      <button type="button" className="font-bold">
-        Start
-      </button>
+      <div className="relative">
+        <button
+          ref={startButtonRef}
+          type="button"
+          className="font-bold"
+          aria-haspopup="true"
+          aria-expanded={startOpen}
+          onClick={() => setStartOpen((v) => !v)}
+        >
+          Start
+        </button>
+        {startOpen && (
+          <StartMenu onClose={() => setStartOpen(false)} anchorRef={startButtonRef} />
+        )}
+      </div>
       <div className="flex flex-1 items-center gap-1 overflow-x-auto">
         {order
           .filter((id) => windows[id])
