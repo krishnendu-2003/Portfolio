@@ -3,6 +3,9 @@
 
 :root {
   --font-mono: var(--font-jetbrains-mono);
+  /* 98.css's stock #1084d0 fails WCAG AA (~4.0:1) against the white
+     title-bar text at the light end of the gradient; this passes at ~5.8:1. */
+  --dialog-blue-light: #0c6aa8;
 }
 
 body {
@@ -44,4 +47,45 @@ button.folder-icon:focus {
   color: inherit;
   text-decoration: none;
   cursor: pointer;
+}
+
+/* 98.css only defines a focus outline for <button>; the crawlable case-icon
+   <a> (§3's sanctioned exception) needs the same visible ring explicitly. */
+a.folder-icon:focus {
+  outline: 1px dotted #000000;
+  outline-offset: -2px;
+}
+
+/* 98.css's inactive title bar keeps white .title-bar-text on a light gray
+   gradient (~2:1 contrast) — switch to dark text so it stays readable. */
+.title-bar.inactive .title-bar-text {
+  color: #000000;
+}
+
+/* 98.css explicitly strips focus outlines from the title-bar min/max/close
+   buttons and from text inputs/textarea/select. Restore visible indicators
+   (WCAG 2.4.7) without touching the click/hover states. */
+.title-bar-controls button:focus-visible {
+  outline: 1px solid #000000;
+  outline-offset: 1px;
+  box-shadow: 0 0 0 2px #ffffff;
+}
+
+input[type="text"]:focus-visible,
+input[type="email"]:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid #000080;
+  outline-offset: 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
