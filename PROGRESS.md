@@ -27,9 +27,26 @@ correct content, Restore joke fires, wallpaper swatches preview real
 gradients and apply live). `next build`/`tsc`/`eslint`/`vitest` all clean,
 redaction grep clean.
 
-## In progress / next up
+- [x] 2. Sketchpad — desktop icon, 9 tools incl. rainbow brush/flood fill/6
+      stamps (canvas-drawn, not separate SVG files), 3 sizes, 16-swatch
+      palette + native color input, undo (12-snapshot cap), inline-confirm
+      Clear, network-free Save. `next/dynamic(ssr:false)` in
+      windowRegistry.ts — first use of that pattern, games will match it.
+      Added to Start Menu. Smoke-tested live (pencil, rainbow hue-cycle,
+      undo all verified in-browser).
+- [x] Bug fix (found while testing): hydration mismatch from the wallpaper
+      pre-paint script — `suppressHydrationWarning` on `<html>`.
+- [x] UX fix (user-requested mid-pass): desktop icons now require a
+      double-click/double-tap to open. Single click/tap only selects (a
+      translucent glassmorphic highlight, lifted to `Desktop.tsx` as
+      `selectedId` state), never opens — fixes drags that used to
+      occasionally read as a stray click-to-open or text selection.
+      Keyboard Enter/Space still opens on the first press (`e.detail === 0`
+      distinguishes it from a pointer click). This changed the
+      `DesktopIcon`/`Desktop` contract — keep it in mind if Games'
+      folder-window icons or anything else reuses `DesktopIcon`.
 
-- [ ] 2. Sketchpad
+## In progress / next up
 - [ ] 3a. Shared game engine (useGameLoop, GameShell)
 - [ ] 3b. Games folder window + Start Menu entry
 - [ ] 3c. Match, Snake, Sweeper, Merge, Paddle
