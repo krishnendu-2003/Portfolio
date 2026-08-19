@@ -30,11 +30,18 @@ button.desktop-icon:focus {
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
 }
 
+a.folder-icon,
 button.folder-icon,
+a.folder-icon:hover,
 button.folder-icon:hover,
+a.folder-icon:active,
 button.folder-icon:active,
+a.folder-icon:focus,
 button.folder-icon:focus {
   background: transparent;
   border: none;
   box-shadow: none;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
 }

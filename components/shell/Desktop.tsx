@@ -2,12 +2,14 @@
 
 import { useWindowStore } from "@/lib/windowStore";
 import { windowRegistry, DESKTOP_ICON_ORDER } from "@/lib/windowRegistry";
+import { useUrlSync } from "@/lib/urlSync";
 import { WindowFrame } from "./WindowFrame";
 import { DesktopIcon } from "./DesktopIcon";
 import { Taskbar } from "./Taskbar";
 
 export function Desktop() {
   const windowIds = useWindowStore((s) => s.order);
+  useUrlSync();
 
   return (
     <div className="fixed inset-0 flex flex-col" style={{ background: "#008080" }}>

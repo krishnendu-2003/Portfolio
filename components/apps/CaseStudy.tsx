@@ -14,11 +14,6 @@ export default function CaseStudy({ windowId }: { windowId: string }) {
       {item.body.map((paragraph, i) => (
         <p key={i}>{paragraph}</p>
       ))}
-      {item.placeholder && (
-        <p className="text-xs opacity-60">
-          This case is a placeholder — full detail pending real source material.
-        </p>
-      )}
     </div>
   );
 }

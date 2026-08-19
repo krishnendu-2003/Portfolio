@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { WINDOW_TO_HASH } from "./hashRouting";
 
 export type Rect = { x: number; y: number; w: number; h: number };
 
@@ -130,6 +131,11 @@ export const useWindowStore = create<Store>((set, get) => ({
         cascade: { x, y },
       };
     });
+
+    const hashSlug = WINDOW_TO_HASH[id];
+    if (hashSlug && typeof window !== "undefined") {
+      window.history.pushState(null, "", `#/${hashSlug}`);
+    }
   },
 
   openChildWindow: (parentId, childId, opts) => {

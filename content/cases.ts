@@ -4,7 +4,6 @@ export type CaseStudy = {
   role: string;
   oneLiner: string;
   body: string[];
-  placeholder?: boolean;
 };
 
 export const cases: CaseStudy[] = [
@@ -26,16 +25,19 @@ export const cases: CaseStudy[] = [
     role: "Software Developer Intern, Tech Vortex Ventures",
     oneLiner: "React Native and web product work.",
     body: [
-      "Software Developer Intern at Tech Vortex Ventures, contributing to KeyPr's React Native mobile app and web product surface.",
+      "Software Developer Intern at Tech Vortex Ventures Private Limited (June 2025 – Present), building and maintaining the company's React Native mobile app and web platform.",
+      "Shipped push notifications and WebSocket support for a chat feature, and wired up user authentication through Firebase.",
     ],
   },
   {
     slug: "catoff-gaming",
     title: "Catoff Gaming",
-    role: "Engineering",
-    oneLiner: "Prior engineering work.",
-    body: ["Prior engineering work at Catoff Gaming. Fuller case detail to come."],
-    placeholder: true,
+    role: "Software Developer Intern",
+    oneLiner: "Integrated three popular games and streamlined project workflows.",
+    body: [
+      "Software Developer Intern at Catoff Gaming (March 2025 – June 2025). Integrated three popular games — Fortnite, Marvel Rivals, and CS:GO — and streamlined project workflows, improving overall efficiency by 25%.",
+      "Built with React, TypeScript, and REST APIs.",
+    ],
   },
   {
     slug: "hackathons",
@@ -43,9 +45,10 @@ export const cases: CaseStudy[] = [
     role: "Contributor",
     oneLiner: "Hackathon wins and Superteam India ecosystem contributions.",
     body: [
-      "A running list of hackathon wins and contributions to the Superteam India ecosystem. Specific placements are pulled from my résumé and will be added here.",
+      "Hackathon Winner, Prayash 2024 — Techno India Batanagar (Hardware Project).",
+      "Hackathon Winner, Binary 2025 — Kalyani Govt. College (Deepfake Detection System).",
+      "Alongside hackathons, I contribute to the Superteam India ecosystem.",
     ],
-    placeholder: true,
   },
 ];
 
