@@ -68,12 +68,91 @@ All of the above smoke-tested live (Games folder opens, High Scores opens
 as its child exactly like "Open full case", icon collision fix verified
 by reloading with stale localStorage positions).
 
-## In progress / next up
+- [x] 3c (1/5). Match — 4x4 memory grid, 8 procedurally-generated original
+      glyph pairs (regular polygons via Math.cos/sin, plus a star and a
+      plus — not hand-authored assets). Turn-based, uses GameShell but not
+      useGameLoop. Smoke-tested: moves counter correct, mismatch/match
+      logic correct, Reset correct.
+- [x] 3c (2/5). Snake — canvas grid game, original dark-green chrome, arrow
+      keys/swipe/on-screen D-pad, speed ramps with length via
+      useGameLoop's accumulator. Smoke-tested: renders, steers, wall
+      collision → game-over overlay, P pauses (shows "Paused", blocks
+      input), Reset works, score submits.
+- [x] Refactored GameShell's `running` flag from a render-prop to a
+      `RunningContext` + `useGameRunning()` hook — Snake needs `running` at
+      its own component top level to call `useGameLoop`, and the render-prop
+      form would have nested that hook call inside a closure, outside the
+      real top level. Match updated to match (its children prop is now
+      plain `ReactNode`).
+- [x] Discovered (and worked around, not fixed upstream): this repo's
+      `react-hooks/refs` eslint rule flags `object.property` access
+      whenever `object` is returned from a hook that also returns a ref,
+      even for non-ref properties. Fix is always the same: destructure into
+      local consts before using values in JSX/hooks. Snake does this;
+      Sweeper/Merge/Paddle will need to as well if they follow the same
+      "one hook returns refs+state, one descendant component consumes it"
+      shape Snake uses.
 
-- [ ] 3c. Match, Snake, Sweeper, Merge, Paddle — build in this order, each
-      commit adds its id to `GAME_IDS` + a `GAME_CATALOG` entry
-- [ ] 4. Final pass (redaction sweep, bundle table, deploy, live Lighthouse,
-      regression check)
+## In progress / next up — pick up here after `/clear`
+
+- [ ] 3c (3/5). Sweeper — grid minesweeping, original chrome/numeral
+      styling, 3 difficulties, right-click to flag (desktop) + long-press
+      to flag (touch)
+- [ ] 3c (4/5). Merge — 4x4 sliding number-merge puzzle, original palette/
+      typography (not a 2048 visual reproduction), arrow keys + swipe
+- [ ] 3c (5/5). Paddle — brick-breaker, original brick palette/layout,
+      mouse/touch drag + arrow keys
+- [ ] 4. Final pass:
+      - Redaction grep sweep across the whole repo (every new file this
+        pass, not just content files)
+      - `next build` route-level bundle table in this doc — homepage
+        first-load JS must not grow >~15KB gzipped over the Phase 1
+        baseline; prove Sketchpad/games aren't in the homepage chunk
+        (they're all `next/dynamic(ssr:false)` already, so this should
+        just be a matter of running the build and reading the table)
+      - Deploy to Vercel (project already linked — `.vercel/project.json`,
+        `krishnendu-portfolio`; live at
+        `https://krishnendu-portfolio-chi.vercel.app`). Vercel CLI is not
+        installed locally (`npm i -g vercel` or `npx vercel`) — check
+        before assuming it's available.
+      - Live Lighthouse on the deployed URL (not local): Performance ≥90,
+        Accessibility 100, SEO 100, across homepage/a case page/`/about`/
+        `/resume`. Phase 1's 93/97 performance numbers were from a local
+        build — this is the first real number.
+      - Open 3 windows + a running game together: zero console errors,
+        zero hydration warnings (ignore `bis_skin_checked`/`bis_register` —
+        that's a browser-extension artifact in the test environment, not
+        the app; every hydration check this pass confirmed no
+        `data-wallpaper`-style app-caused mismatch)
+      - Regression check: icon drag still never opens a window (double-
+        click/tap requirement from earlier this pass), arrow-key icon nav
+        still works, all 8 wallpapers still pass label contrast, Start
+        Menu still fully keyboard-operable (now with 2 submenus — Selected
+        Work, Games — verify Left/Right/Escape between them), Escape still
+        closes the focused window (including a game window)
+      - End with the single consolidated question list below
+
+## Next-session quick orientation
+
+- Games so far live in `components/apps/games/`: `useGameLoop.ts`,
+  `GameShell.tsx` (+ `useGameRunning`/`useWindowActive`), `Match.tsx`,
+  `Snake.tsx`. Copy Snake's split (a `useXGame()` hook holding refs/state,
+  called from the outer non-descendant component; a `XBoard` descendant
+  component that calls `useGameRunning()`/`useGameLoop()` and destructures
+  the hook's return before using it in JSX) for Sweeper/Merge/Paddle if
+  they need `useGameLoop` — Merge and Sweeper might not (turn-based like
+  Match), Paddle definitely will (continuous ball physics).
+- Every game registers in 4 places per the pattern already established:
+  `lib/windowMeta.ts` (windowMeta entry + push the id into `GAME_IDS`),
+  `lib/gameCatalog.ts` (title/higherIsBetter/formatScore), `lib/
+  windowRegistry.ts` (`dynamic(() => import(...), {ssr:false})` +
+  componentsById entry), and an original 32x32 icon in `public/icons/`.
+  GamesFolder/Start-Menu-Games-submenu/HighScores all read `GAME_IDS`
+  automatically — nothing else to touch.
+- Dev server: there's usually already one running on :3000 from a prior
+  turn (check with `ps aux | grep "next dev"` before starting a new one —
+  starting a second one just fails with "Another next dev server is
+  already running" and exits, harmlessly).
 
 ## Placeholders shipped (needs real content from the user)
 
@@ -85,4 +164,19 @@ by reloading with stale localStorage positions).
 
 ## Open questions for the user
 
-(consolidated at the end, per the operating mode)
+Per the operating mode, these are collected here rather than blocking —
+none of them stopped any work this pass, all shipped as clearly-marked
+placeholders. Still open as of this checkpoint:
+
+1. **Now (2026) copy** — a short, dated "what I'm working on right now"
+   note. `content/now.ts` currently has `"(copy pending)"`.
+2. **My Machine skills list** — Processor/Memory/Installed lines framing
+   your personal stack as system specs. Personal stack only — no Lumeo
+   backend/infra names. `content/systemProperties.ts` currently has
+   `"(copy pending)"` placeholders.
+3. **Recycle Bin project list** — shelved side projects, one honest
+   self-deprecating line each. `content/recycleBin.ts` currently has a
+   single `"(copy pending)"` entry; not invented.
+
+Nothing else has come up yet — Sweeper/Merge/Paddle and the final pass
+may add more (e.g. if a game needs a specific difficulty/setting choice).
