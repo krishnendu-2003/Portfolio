@@ -20,6 +20,7 @@ import { cases } from "@/content/cases";
 // the window actually opens — must never land in the homepage bundle.
 const Sketchpad = dynamic(() => import("@/components/apps/Sketchpad"), { ssr: false });
 const Match = dynamic(() => import("@/components/apps/games/Match"), { ssr: false });
+const Snake = dynamic(() => import("@/components/apps/games/Snake"), { ssr: false });
 import { windowMeta, type WindowMeta, DESKTOP_ICON_ORDER } from "./windowMeta";
 
 export type WindowRegistryEntry = WindowMeta & {
@@ -45,6 +46,7 @@ const componentsById: Record<string, ComponentType<{ windowId: string }>> = {
   games: GamesFolder,
   "high-scores": wrap(HighScores),
   match: Match,
+  snake: Snake,
 };
 
 for (const item of cases) {

@@ -14,4 +14,9 @@ export const GAME_CATALOG: Record<string, GameCatalogEntry> = {
     higherIsBetter: false,
     formatScore: (v) => `${v} moves`,
   },
+  snake: {
+    title: "Snake",
+    higherIsBetter: true,
+    formatScore: (v) => `${v} eaten`,
+  },
 };
