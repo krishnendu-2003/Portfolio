@@ -71,6 +71,12 @@ export const windowMeta: Record<string, WindowMeta> = {
     defaultSize: { w: 360, h: 380 },
     resizable: true,
   },
+  sketchpad: {
+    title: "Sketchpad",
+    icon: "/icons/sketchpad.svg",
+    defaultSize: { w: 520, h: 460 },
+    resizable: true,
+  },
 };
 
 // Case cards + full case windows, opened from inside the Selected Work
@@ -100,4 +106,5 @@ export const DESKTOP_ICON_ORDER = [
   "system-properties",
   "recycle-bin",
   "wallpaper",
+  "sketchpad",
 ];

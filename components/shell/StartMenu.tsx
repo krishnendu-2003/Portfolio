@@ -39,6 +39,8 @@ export function StartMenu({
     { kind: "window", id: "resume", label: "Résumé" },
     { kind: "window", id: "contact", label: "Contact" },
     { kind: "separator" },
+    { kind: "window", id: "sketchpad", label: "Sketchpad" },
+    { kind: "separator" },
     { kind: "window", id: "wallpaper", label: "Wallpaper" },
     { kind: "action", label: "Reset icon layout", run: resetLayout },
     { kind: "separator" },

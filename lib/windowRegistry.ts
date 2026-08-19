@@ -1,4 +1,5 @@
 import type { ComponentType } from "react";
+import dynamic from "next/dynamic";
 import AboutMe from "@/components/apps/AboutMe";
 import WhatIDo from "@/components/apps/WhatIDo";
 import SelectedWork from "@/components/apps/SelectedWork";
@@ -12,6 +13,10 @@ import Now from "@/components/apps/Now";
 import SystemProperties from "@/components/apps/SystemProperties";
 import RecycleBin from "@/components/apps/RecycleBin";
 import { cases } from "@/content/cases";
+
+// Heavy, canvas-driven apps split into their own chunk, loaded only when
+// the window actually opens — must never land in the homepage bundle.
+const Sketchpad = dynamic(() => import("@/components/apps/Sketchpad"), { ssr: false });
 import { windowMeta, type WindowMeta, DESKTOP_ICON_ORDER } from "./windowMeta";
 
 export type WindowRegistryEntry = WindowMeta & {
@@ -33,6 +38,7 @@ const componentsById: Record<string, ComponentType<{ windowId: string }>> = {
   now: wrap(Now),
   "system-properties": wrap(SystemProperties),
   "recycle-bin": wrap(RecycleBin),
+  sketchpad: wrap(Sketchpad),
 };
 
 for (const item of cases) {
