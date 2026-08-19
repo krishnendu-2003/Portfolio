@@ -41,6 +41,18 @@ export const windowMeta: Record<string, WindowMeta> = {
     defaultSize: { w: 380, h: 360 },
     resizable: true,
   },
+  "display-properties": {
+    title: "Display Properties",
+    icon: "/icons/placeholder.svg",
+    defaultSize: { w: 300, h: 340 },
+    resizable: true,
+  },
+  shutdown: {
+    title: "Shut Down Windows",
+    icon: "/icons/placeholder.svg",
+    defaultSize: { w: 320, h: 200 },
+    resizable: false,
+  },
 };
 
 // Case cards + full case windows, opened from inside the Selected Work

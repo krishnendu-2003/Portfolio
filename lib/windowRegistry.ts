@@ -6,6 +6,8 @@ import CaseCard from "@/components/apps/CaseCard";
 import CaseStudy from "@/components/apps/CaseStudy";
 import Resume from "@/components/apps/Resume";
 import Contact from "@/components/apps/Contact";
+import DisplayProperties from "@/components/apps/DisplayProperties";
+import ShutDown from "@/components/apps/ShutDown";
 import { cases } from "@/content/cases";
 import { windowMeta, type WindowMeta, DESKTOP_ICON_ORDER } from "./windowMeta";
 
@@ -23,6 +25,8 @@ const componentsById: Record<string, ComponentType<{ windowId: string }>> = {
   "what-i-do": wrap(WhatIDo),
   resume: wrap(Resume),
   contact: wrap(Contact),
+  "display-properties": wrap(DisplayProperties),
+  shutdown: wrap(ShutDown),
 };
 
 for (const item of cases) {
