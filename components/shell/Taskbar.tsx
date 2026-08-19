@@ -3,7 +3,30 @@
 import { useEffect, useRef, useState } from "react";
 import { useWindowStore } from "@/lib/windowStore";
 import { restoreFocusOrigin } from "@/lib/focusReturn";
+import { useSoundStore } from "@/lib/soundStore";
 import { StartMenu } from "./StartMenu";
+
+function SoundToggle() {
+  const muted = useSoundStore((s) => s.muted);
+  const hydrate = useSoundStore((s) => s.hydrate);
+  const toggle = useSoundStore((s) => s.toggle);
+
+  useEffect(() => {
+    hydrate();
+  }, [hydrate]);
+
+  return (
+    <button
+      type="button"
+      aria-pressed={!muted}
+      aria-label={muted ? "Sound is off — turn on" : "Sound is on — turn off"}
+      className="px-2 text-xs"
+      onClick={toggle}
+    >
+      {muted ? "Sound: Off" : "Sound: On"}
+    </button>
+  );
+}
 
 function useClock() {
   const [time, setTime] = useState<string | null>(null);
@@ -83,6 +106,7 @@ function DesktopTaskbar() {
             );
           })}
       </div>
+      <SoundToggle />
       <div className="px-2 text-xs" suppressHydrationWarning>
         {time ?? ""}
       </div>
