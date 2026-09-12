@@ -142,6 +142,41 @@ still come next, unaffected by this insert.
       as part of this deploy. Do those once Sweeper/Merge/Paddle land (or
       sooner, if asked), against whatever commit is live at the time.
 
+## Résumé content swap (user-requested, out of the normal step 4 sequence)
+
+- [x] Replaced the placeholder-era résumé data in `content/about.ts` with the
+      real content from `Krishnendu_Samanta.docx` (the user's current
+      résumé, supplied this session). New shape adds `title`, a `contact`
+      object (email/phone/location/github/linkedin) and a `skills` array of
+      `{label, value}` rows; `objective` is now the docx's Professional
+      Summary. Experience is the two internships (Tech Vortex, Catoff) with
+      their full bullets, projects are SwitchSocial / FirmDev / Deepfake
+      Detection System, and education carries CGPA 7.5 + Aug 2026.
+- [x] Both renderers updated to the docx's section order (Summary → Skills →
+      Experience → Projects → Achievements → Education → Additional →
+      Volunteering): `components/apps/Resume.tsx` (desktop window) and
+      `app/resume/page.tsx` (standalone route). `e.detail` is now optional —
+      the Higher Secondary entry has none, so it renders conditionally.
+- [x] `public/resume.pdf` regenerated. **The old one was stale** — it was a
+      pre-portfolio PDF that still linked to a Linktree. The new one is
+      printed from the same `resume` object via headless Chrome
+      (`--headless --print-to-pdf` over a generated A4 HTML), so the PDF and
+      the site can't drift. 2 pages, 88,942 bytes. There is no LibreOffice
+      or poppler on this machine — the Chrome route is the one that works.
+- [x] `tsc`, `eslint` clean. Verified locally on :3000 and in production.
+- [x] Committed as `59c90d1` and pushed. Note: this push **created** `main`
+      on `github.com/krishnendu-2003/Portfolio` — the remote had no `main`
+      before, so nothing was previously deployed from git.
+- [x] Redeployed to production: `vercel deploy --prod`, deployment id
+      `dpl_2FHjRNKeV39LBMi23LFiLSBwNtM1`. Verified 200s on `/`, `/resume`
+      (new summary/phone/skills text present) and `/resume.pdf` (88,942
+      bytes) at `https://krishnendu-portfolio-chi.vercel.app`.
+      The raw deployment URL (`krishnendu-portfolio-fl4ct2r2o.vercel.app`)
+      302s to Vercel SSO — deployment protection is on for the project, so
+      verify against the alias above, or use `vercel curl` for the raw URL.
+      As with the earlier interim deploy, **this is not item 4** — no
+      Lighthouse, bundle table or redaction sweep were run.
+
 ## In progress / next up — pick up here after `/clear`
 
 - [ ] 3c (3/5). Sweeper — grid minesweeping, original chrome/numeral
@@ -226,6 +261,15 @@ placeholders. Still open as of this checkpoint:
 3. **Recycle Bin project list** — shelved side projects, one honest
    self-deprecating line each. `content/recycleBin.ts` currently has a
    single `"(copy pending)"` entry; not invented.
+
+4. **Lumeo vs. the new résumé — which story is current?** The résumé now
+   describes a React Native / React.js engineer and does not mention Lumeo
+   at all. But `aboutMe` and `whatIDo` in the same `content/about.ts` still
+   say CTO & Co-founder at Lumeo owning five production models, and
+   `content/cases.ts` has a Lumeo case study at `/work/lumeo`. The About Me
+   and What I Do windows therefore contradict the Résumé window in the live
+   build. Not resolved on my own — flagged to the user, awaiting a call on
+   which version to align to.
 
 Nothing else has come up yet — Sweeper/Merge/Paddle and the final pass
 may add more (e.g. if a game needs a specific difficulty/setting choice).
