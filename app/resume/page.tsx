@@ -13,25 +13,31 @@ export default function ResumePage() {
       <Link href="/">← Back to desktop</Link>
       <div>
         <h1 className="text-2xl font-bold">{resume.name}</h1>
-        <p className="opacity-70">{resume.location}</p>
-        <p className="mt-3">{resume.objective}</p>
+        <p className="text-sm opacity-70">{resume.title}</p>
+        <p className="mt-2 text-sm">
+          {resume.contact.email} · {resume.contact.phone} · {resume.contact.location}
+        </p>
+        <p className="text-sm">
+          {resume.contact.github} · {resume.contact.linkedin}
+        </p>
       </div>
 
       <div>
-        <h2 className="text-xl font-semibold">Education</h2>
-        {resume.education.map((e) => (
-          <div key={e.degree} className="mt-2">
-            <p className="font-medium">
-              {e.degree} — <span className="text-sm opacity-70">{e.period}</span>
-            </p>
-            <p className="text-sm">{e.school}</p>
-            <p className="text-sm opacity-70">{e.detail}</p>
-          </div>
+        <h2 className="text-xl font-semibold">Professional Summary</h2>
+        <p className="mt-1 text-sm">{resume.objective}</p>
+      </div>
+
+      <div>
+        <h2 className="text-xl font-semibold">Technical Skills</h2>
+        {resume.skills.map((s) => (
+          <p key={s.label} className="mt-1 text-sm">
+            <span className="font-medium">{s.label}:</span> {s.value}
+          </p>
         ))}
       </div>
 
       <div>
-        <h2 className="text-xl font-semibold">Work Experience</h2>
+        <h2 className="text-xl font-semibold">Professional Experience</h2>
         {resume.experience.map((job) => (
           <div key={`${job.org}-${job.period}`} className="mt-2">
             <p className="font-medium">
@@ -65,6 +71,19 @@ export default function ResumePage() {
             <li key={a}>{a}</li>
           ))}
         </ul>
+      </div>
+
+      <div>
+        <h2 className="text-xl font-semibold">Education</h2>
+        {resume.education.map((e) => (
+          <div key={e.degree} className="mt-2">
+            <p className="font-medium">
+              {e.degree} — <span className="text-sm opacity-70">{e.period}</span>
+            </p>
+            <p className="text-sm">{e.school}</p>
+            {e.detail ? <p className="text-sm opacity-70">{e.detail}</p> : null}
+          </div>
+        ))}
       </div>
 
       <div>
